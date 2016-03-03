@@ -1,0 +1,72 @@
+<beans xmlns="http://www.springframework.org/schema/beans"  
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+     xmlns:context="http://www.springframework.org/schema/context"  
+     xmlns:tx="http://www.springframework.org/schema/tx"
+     xsi:schemaLocation="  
+         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd  
+         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+         ">
+ 
+	<!-- ============================== PlaceHolder Properties Config ============================== -->
+  
+	<context:component-scan 	base-package="com.singplayground.showcase.dao"/>
+	<context:property-placeholder location="/WEB-INF/config/placeholder/hibernate.properties"/>
+	
+
+	<bean id="DataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		  <property name="driverClass" 				value="${connection.driverClass}" />
+		  <property name="jdbcUrl" 					value="${connection.url}" />
+		  <property name="user" 					value="${connection.user}" />
+		  <property name="password" 				value="${connection.password}" />
+		  <property name="acquireIncrement"			value="${hibernate.c3p0.acquireIncrement}"/>
+		  <property name="idleConnectionTestPeriod"	value="${hibernate.c3p0.idleConnectionTestPeriod}"/>
+		  <property name="maxPoolSize"				value="${hibernate.c3p0.maxPoolSize}"/>
+		  <property name="maxStatements"			value="${hibernate.c3p0.maxStatements}"/>
+		  <property name="minPoolSize"				value="${hibernate.c3p0.minPoolSize}"/>
+		  <property name="checkoutTimeout"			value="${hibernate.c3p0.checkoutTimeout}"/>
+	</bean>
+
+ 	<!-- Session Factory Declaration -->
+  
+ 	<bean id="SessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+  		<property name="dataSource" ref="DataSource" />
+		 <property name="packagesToScan">
+			<value>
+				com.singplayground.showcase.model
+			</value>
+		</property>
+
+	 	 <property name="hibernateProperties">
+			 <props>
+				    <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				    <prop key="hibernate.show_sql">${hibernate.showSql}</prop>
+				    <prop key="hibernate.format_sql">${hibernate.formatSql}</prop>
+			 </props>
+	  	 </property>
+	  	
+ 	</bean>
+
+
+	<bean id="testDao" class="com.singplayground.showcase.dao.TestDaoImpl">
+		<property name="sessionFactory" ref="SessionFactory"/>
+	</bean>
+	
+	<bean id="testModService" class="com.singplayground.showcase.service.TestModServiceImpl">
+		<property name="testDao" ref="testDao"></property>
+	</bean>
+ 	
+    <tx:annotation-driven transaction-manager="txManager"/>
+
+ 	<!-- Transaction Manager is defined -->
+ 
+   
+	<bean id="txManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+       <property name="SessionFactory" ref="SessionFactory"/>
+    </bean>
+    
+
+	
+</beans>
+
+

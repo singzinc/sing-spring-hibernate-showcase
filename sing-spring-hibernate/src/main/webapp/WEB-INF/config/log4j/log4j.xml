@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--  
 <!DOCTYPE log4j:configuration PUBLIC "-//LOGGER" "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
-
+-->
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 <log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
 
   <!-- ============================= Appender ============================= -->
@@ -9,48 +11,48 @@
 
   <appender name="console" class="org.apache.log4j.ConsoleAppender">
     <layout class="org.apache.log4j.PatternLayout">
-      <param name="ConversionPattern" value="%-5p|%d{ABSOLUTE}| %c{1}:%L - %m%n" />
+      <param name="ConversionPattern" value="%-5p|%d{ABSOLUTE}| %c{1}:%L - %M - %m%n" />
     </layout>
   </appender>
   <!-- Default Appender -->
 
   <appender name="system" class="org.apache.log4j.DailyRollingFileAppender">
-    <param name="File"        value="${catalina.base}/springshowcase/system.log" />
+    <param name="File"        value="C:/sing/showcase/logs/springshowcase/system.log" />
     <param name="DatePattern" value="'.'yyyy-MM-dd" />
     <layout class="org.apache.log4j.PatternLayout">
-      <param name="ConversionPattern" value="%-5p|%d{ABSOLUTE}| %c{1}:%L - %m%n" />
+      <param name="ConversionPattern" value="%-5p|%d{ABSOLUTE}| %c{1}:%L- %M - %m%n" />
     </layout>
   </appender>
   
   <appender name="controller" class="org.apache.log4j.DailyRollingFileAppender">
-    <param name="File"        value="${catalina.base}/logs/springshowcase/controller.log" />
+    <param name="File"        value="C:/sing/showcase/logs/springshowcase/controller.log" />
     <param name="DatePattern" value="'.'yyyy-MM-dd" />
     <layout class="org.apache.log4j.PatternLayout">
-      <param name="ConversionPattern" value="%-5p|%d{ABSOLUTE}| %c{1}:%L - %m%n" />
+      <param name="ConversionPattern" value="%-5p|%d{ABSOLUTE}| %c{1} - %M :%L - %m%n" />
     </layout>
   </appender>
   
   <appender name="dao" class="org.apache.log4j.DailyRollingFileAppender">
-    <param name="File"        value="${catalina.base}/logs/springshowcase/dao.log" />
+    <param name="File"        value="C:/sing/showcase/logs/springshowcase/dao.log" />
     <param name="DatePattern" value="'.'yyyy-MM-dd" />
     <layout class="org.apache.log4j.PatternLayout">
-      <param name="ConversionPattern" value="%-5p|%d{ABSOLUTE}| %c{1}:%L - %m%n" />
+      <param name="ConversionPattern" value="%-5p|%d{ABSOLUTE}| %c{1} - %M :%L - %m%n" />
     </layout>
   </appender>
 
   <appender name="service" class="org.apache.log4j.DailyRollingFileAppender">
-    <param name="File"        value="${catalina.base}/logs/springshowcase/service.log" />
+    <param name="File"        value="C:/sing/showcase/logs/springshowcase/service.log" />
     <param name="DatePattern" value="'.'yyyy-MM-dd" />
     <layout class="org.apache.log4j.PatternLayout">
-      <param name="ConversionPattern" value="%-5p|%d{ABSOLUTE}| %c{1}:%L - %m%n" />
+      <param name="ConversionPattern" value="%-5p|%d{ABSOLUTE}| %c{1} - %M :%L - %m%n" />
     </layout>
   </appender>
 
   <appender name="util" class="org.apache.log4j.DailyRollingFileAppender">
-    <param name="File"        value="${catalina.base}/logs/springshowcase/util.log" />
+    <param name="File"        value="C:/sing/showcase/logs/springshowcase/util.log" />
     <param name="DatePattern" value="'.'yyyy-MM-dd" />
     <layout class="org.apache.log4j.PatternLayout">
-      <param name="ConversionPattern" value="%-5p|%d{ABSOLUTE}| %c{1}:%L - %m%n" />
+      <param name="ConversionPattern" value="%-5p|%d{ABSOLUTE}| %c{1} - %M :%L - %m%n" />
     </layout>
   </appender>
   
@@ -60,22 +62,22 @@
   logger level : DEBUG,INFO,WARN,ERROR,FATAL
   -->
   
-  <logger name="com.singplayground.springshowcase.controller">
-    <level value="debug"/>
+  <logger name="com.singplayground.showcase.controller">
+    <level value="info"/>
     <appender-ref ref="controller"/>
   </logger>
   
-  <logger name="com.singplayground.springshowcase.dao">
+  <logger name="com.singplayground.showcase.dao">
     <level value="debug" />
     <appender-ref ref="dao" />
   </logger>
   
-  <logger name="com.singplayground.springshowcase.service">
+  <logger name="com.singplayground.showcase.service">
     <level value="debug" />
     <appender-ref ref="service" />
   </logger>
   
-   <logger name="com.singplayground.springshowcase.util">
+   <logger name="com.singplayground.showcase.util">
     <level value="debug" />
     <appender-ref ref="util" />
   </logger>

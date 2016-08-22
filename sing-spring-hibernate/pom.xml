@@ -19,7 +19,7 @@
 		<hibernate-validator.version>5.2.4.Final</hibernate-validator.version>
 
 		<!-- Json lib -->
-		<jackson.version>2.2.2</jackson.version>
+		<jackson.version>2.8.1</jackson.version>
 		
 		<log4j.version>2.4.1</log4j.version>
 		<slf4j.version>1.7.21</slf4j.version>
@@ -36,6 +36,20 @@
 	</properties>
 	
 	<dependencies>
+
+		<!-- https://mvnrepository.com/artifact/joda-time/joda-time -->
+		<dependency>
+		    <groupId>joda-time</groupId>
+		    <artifactId>joda-time</artifactId>
+		    <version>2.9.4</version>
+		</dependency>
+		
+		<dependency>
+		  <groupId>org.jadira.usertype</groupId>
+		  <artifactId>usertype.core</artifactId>
+		  <version>3.1.0.CR1</version>
+		</dependency>
+		
 
 		<dependency>
 			<groupId>jstl</groupId>
@@ -132,6 +146,12 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>${jackson.version}</version>
 		</dependency>
+		
+		<dependency>
+		    <groupId>org.skyscreamer</groupId>
+		    <artifactId>jsonassert</artifactId>
+		    <version>1.0.0</version>
+		</dependency>
 
 		<!-- Test -->
 		 
@@ -180,7 +200,7 @@
 			<artifactId>validation-api</artifactId>
 			<version>1.0.0.GA</version>
 		</dependency>
-		-->
+	-->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>

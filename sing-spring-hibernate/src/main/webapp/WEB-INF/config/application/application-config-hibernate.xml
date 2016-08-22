@@ -52,10 +52,17 @@
 		<property name="sessionFactory" ref="SessionFactory"/>
 	</bean>
 	
+	<bean id="testDateDao" class="com.singplayground.showcase.dao.TestDateDaoImpl">
+		<property name="sessionFactory" ref="SessionFactory"/>
+	</bean>
+	
 	<bean id="testModService" class="com.singplayground.showcase.service.TestModServiceImpl">
 		<property name="testDao" ref="testDao"></property>
 	</bean>
  	
+ 	<bean id="testDateTimeService" class="com.singplayground.showcase.service.TestDateTimeServiceImpl">
+		<property name="testDateDao" ref="testDateDao"></property>
+	</bean>
     <tx:annotation-driven transaction-manager="txManager"/>
 
  	<!-- Transaction Manager is defined -->

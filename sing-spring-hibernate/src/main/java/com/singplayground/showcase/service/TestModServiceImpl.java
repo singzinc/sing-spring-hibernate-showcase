@@ -2,7 +2,8 @@ package com.singplayground.showcase.service;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -13,8 +14,7 @@ import com.singplayground.showcase.model.TestMod;
 @Service
 public class TestModServiceImpl implements TestModService {
 
-	public Logger logger = Logger.getLogger(TestModServiceImpl.class);
-
+	public Logger logger = LogManager.getLogger(TestModServiceImpl.class);
 	//@Autowired
 	private TestDao testDao;
 

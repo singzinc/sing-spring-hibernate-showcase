@@ -4,7 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -24,7 +25,7 @@ import com.singplayground.showcase.service.TestModService;
 @Controller
 public class TestController {
 
-	protected Logger logger = Logger.getLogger(TestController.class);
+	protected Logger logger = LogManager.getLogger(TestController.class);
 
 	private TestModService testModService;
 
@@ -60,6 +61,7 @@ public class TestController {
 	@RequestMapping(value = "/testGet", method = RequestMethod.GET)
 	public ModelAndView testGetController() {
 		System.out.println("this is test get");
+		logger.info("----------- test get ------");
 		ModelAndView mav = new ModelAndView();
 		try {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");

@@ -1,12 +1,15 @@
 package com.singplayground.showcase.test;
 
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.restdocs.RestDocumentation;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -17,14 +20,21 @@ public class JsonControllerTests extends AbstractContextControllerTests {
 
 	private MockMvc mockMvc;
 
+	@Rule
+	public RestDocumentation restDocumentation = new RestDocumentation("target/generated-snippets");
+
 	@Before
 	public void setup() throws Exception {
-		this.mockMvc = webAppContextSetup(this.wac).build();
+		this.mockMvc = webAppContextSetup(this.wac).apply(documentationConfiguration(this.restDocumentation)).build();
 	}
 
 	@Test
 	public void param() throws Exception {
 		this.mockMvc.perform(get("/test/json/example1")).andExpect(content().string("test"));
+		/*	
+			this.mockMvc.perform(get("/test/json/example1")).andExpect(content().string("test"))
+					.andDo(document("index", links(linkWithRel("alpha").description("Link to the alpha resource"), linkWithRel("bravo").description("Link to the bravo resource"))));
+		*/
 	}
 
 }

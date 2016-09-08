@@ -3,7 +3,13 @@ package com.singplayground.showcase.test;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -33,14 +39,21 @@ public class ExamControllerTests extends AbstractContextControllerTests {
 	@Rule
 	public final JUnitRestDocumentation restDocumentation = new JUnitRestDocumentation("target/generated-snippets");
 
-	private RestDocumentationResultHandler document;
+	private RestDocumentationResultHandler documentationHandler;
 
 	@Before
 	public void setup() throws Exception {
 		//this.mockMvc = webAppContextSetup(this.wac).apply(documentationConfiguration(this.restDocumentation)).build();
-		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).apply(documentationConfiguration(this.restDocumentation)).build();
-		//this.document = document("{method-name}", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()));
-		//this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context).apply(documentationConfiguration(this.restDocumentation)).alwaysDo(this.document).build();
+		//this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).apply(documentationConfiguration(this.restDocumentation)).build();
+
+		this.documentationHandler = document("{method-name}", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()));
+
+		//		mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();  
+		//		this.mockMvc = webAppContextSetup(this.wac).apply(documentationConfiguration(this.restDocumentation)).build();
+		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).apply(documentationConfiguration(this.restDocumentation))
+		//				.alwaysDo(document("{method-name}/{step}/"))
+				.build();
+
 	}
 
 	@Test
@@ -55,8 +68,14 @@ public class ExamControllerTests extends AbstractContextControllerTests {
 				.andExpect(jsonPath("$.title").value("2014 - Math exam"));
 		this.mockMvc.perform(get("/exam/2015/getExam").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andExpect(jsonPath("$.examId").value(3))
 				.andExpect(jsonPath("$.title").value("2015 - Business exam"));
-		this.mockMvc.perform(get("/exam/2016/getExam").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andExpect(jsonPath("$.examId").value(1000))
-				.andExpect(jsonPath("$.title").value("2015 - Exam"));
+		this.mockMvc
+				.perform(get("/exam/2016/getExam").accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.examId").value(1000))
+				.andExpect(jsonPath("$.title").value("2015 - Exam"))
+				.andDo(this.documentationHandler.document(responseFields(fieldWithPath("examId").description("examId")),
+						responseFields(fieldWithPath("title").description("title")), responseFields(fieldWithPath("content").description("content")),
+						responseFields(fieldWithPath("examDate").description("examDate")), responseFields(fieldWithPath("totalMarks").description("totalMarks"))));
 
 		/*
 		this.mockMvc.perform(get("/mapping/produces").accept(MediaType.APPLICATION_JSON))
@@ -86,4 +105,5 @@ public class ExamControllerTests extends AbstractContextControllerTests {
 				.andExpect(jsonPath("$[*].examId", containsInAnyOrder(1, 3, 2)));
 
 	}
+
 }

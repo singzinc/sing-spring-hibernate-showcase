@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.singplayground.showcase.dto.StockDto;
+import com.singplayground.showcase.dto.StockReportDto;
+
 @RestController
 public class JsonController {
 
@@ -18,6 +21,22 @@ public class JsonController {
 		logger.info("******** json example 1 ******");
 		String msg = "test";
 		return msg;
+	}
+
+	@RequestMapping(value = "/getStock", method = RequestMethod.GET)
+	@ResponseBody
+	public StockDto getStockJason() {
+		logger.info("******** get stock ******");
+		StockDto stockDto = new StockDto();
+		StockReportDto stockReportDto = new StockReportDto();
+		stockReportDto.setStockNo("005");
+		stockReportDto.setStockRank("AAA");
+		stockReportDto.setStockComment("I think ....");
+
+		stockDto.setStockName("HSBC");
+		stockDto.setMarketCode("HK");
+		stockDto.setStockReportDto(stockReportDto);
+		return stockDto;
 	}
 
 }

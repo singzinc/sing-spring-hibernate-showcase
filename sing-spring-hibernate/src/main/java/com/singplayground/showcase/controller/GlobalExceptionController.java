@@ -1,6 +1,7 @@
 package com.singplayground.showcase.controller;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -9,7 +10,7 @@ import com.singplayground.showcase.dto.ErrorMsgDto;
 import com.singplayground.showcase.exception.ControllerGenericException;
 import com.singplayground.showcase.exception.IllegalArgumentGenericException;
 
-//@ControllerAdvice
+@ControllerAdvice
 public class GlobalExceptionController {
 
 	@ExceptionHandler(ControllerGenericException.class)

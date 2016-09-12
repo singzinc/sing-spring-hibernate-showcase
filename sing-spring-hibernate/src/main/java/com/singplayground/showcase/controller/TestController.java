@@ -202,4 +202,15 @@ public class TestController {
 		//hm.put("b", longDate);
 		//return hm;
 	}
+
+	@RequestMapping(value = "/getTestlist", method = RequestMethod.GET)
+	@ResponseBody
+	public List<TestMod> getTestlist() {
+		System.out.println("****** get test list *****");
+		List<TestMod> testLists = testModService.listTestMod();
+
+		return testLists;
+
+	}
+
 }
